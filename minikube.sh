@@ -24,6 +24,11 @@ function run() {
             ;;
         start)
             minikube start
+            echo "re-applying base descriptors in case minikube ip has changed..."
+            DIR=$(pwd)
+            kubectl apply -f ${DIR}/kubernetes/ingress.yml
+            kubectl apply -f ${DIR}/dev-platform/gitlab/kubernetes/gitlab.yml
+            kubectl apply -f ${DIR}/dev-platform/jenkins/kubernetes/jenkins.yml
             ;;
         dashboard)
             minikube dashboard
