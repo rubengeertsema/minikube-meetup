@@ -1,0 +1,61 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab
+  labels:
+    app: gitlab
+spec:
+  externalIPs:
+  - 192.168.99.100
+  ports:
+  - port: 8081
+    targetPort: 80
+    name: '8081'
+  - port: 443
+    targetPort: 443
+    name: '443'
+  - port: 22
+    targetPort: 22
+    name: '22'
+  selector:
+    app: gitlab
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: gitlab
+    name: gitlab
+  name: gitlab
+spec:
+  template:
+    metadata:
+      labels:
+        app: gitlab
+        name: gitlab
+    spec:
+      containers:
+      - name: gitlab
+        image: gitlab/gitlab-ce:latest
+        volumeMounts:
+          - mountPath: /etc/gitlab
+            name: gitlab-config
+          - mountPath: /var/log/gitlab
+            name: gitlab-log
+          - mountPath: /var/opt/gitlab
+            name: gitlab-data
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 80
+          - containerPort: 443
+          - containerPort: 22
+      restartPolicy: Always
+      volumes:
+        - name: gitlab-config
+          emptyDir: {}
+        - name: gitlab-log
+          emptyDir: {}
+        - name: gitlab-data
+          emptyDir: {}

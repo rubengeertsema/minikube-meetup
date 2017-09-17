@@ -1,0 +1,39 @@
+version: '2.1'
+
+services:
+  jenkins:
+    build: ./jenkins
+    image: jenkins/jenkins-custom:latest
+    container_name: jenkins
+    ports:
+      - '8080:8080'
+      - '50000:50000'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - 'jenkins-data:/var/jenkins_home'
+    networks:
+      - development
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    container_name: gitlab
+    restart: always
+    ports:
+      - '8081:80'
+      - '443:443'
+      - '22:22'
+    volumes:
+      - 'gitlab-config:/etc/gitlab'
+      - 'gitlab-log:/var/log/gitlab'
+      - 'gitlab-data:/var/opt/gitlab'
+    networks:
+      - development
+
+volumes:
+  jenkins-data: {}
+  gitlab-config: {}
+  gitlab-log: {}
+  gitlab-data: {}
+
+networks:
+  development:
+    driver: bridge

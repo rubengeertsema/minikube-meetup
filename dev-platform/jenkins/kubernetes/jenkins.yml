@@ -1,0 +1,49 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: jenkins
+    name: jenkins
+  name: jenkins
+spec:
+  template:
+    metadata:
+      labels:
+        app: jenkins
+        name: jenkins
+    spec:
+      containers:
+      - name: jenkins
+        image: jenkins/jenkins-custom:latest
+        volumeMounts:
+          - mountPath: /var/run
+            name: docker-sock
+          - mountPath: /var/jenkins_home
+            name: jenkins-data
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+      restartPolicy: Always
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run
+        - name: jenkins-data
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  labels:
+    app: jenkins
+spec:
+  externalIPs:
+  - 192.168.99.100
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: jenkins
+  type: NodePort

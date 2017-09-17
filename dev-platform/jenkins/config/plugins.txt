@@ -1,0 +1,9 @@
+git:latest
+git-client:latest
+git-server:latest
+docker-commons:latest
+docker-workflow:latest
+email-ext:latest
+blueocean:latest
+greenballs:latest
+mailer:latest
