@@ -13,6 +13,15 @@ function usage() {
   exit 1
 }
 
+function apply_descriptor() {
+    for var in "$@"
+    do
+        printf "\n---- Applying descriptor [${var}] ----\n"
+        IP=$(minikube ip)
+        cat ${var} | sed s/192.168.99.100/${IP}/ | kubectl apply -f -
+    done
+}
+
 function run() {
   ACTION="$@"
     case "${ACTION}" in
@@ -26,9 +35,9 @@ function run() {
             minikube start
             echo "re-applying base descriptors in case minikube ip has changed..."
             DIR=$(pwd)
-            kubectl apply -f ${DIR}/kubernetes/ingress.yml
-            kubectl apply -f ${DIR}/dev-platform/gitlab/kubernetes/gitlab.yml
-            kubectl apply -f ${DIR}/dev-platform/jenkins/kubernetes/jenkins.yml
+            apply_descriptor ${DIR}/kubernetes/ingress.yml \
+                ${DIR}/dev-platform/gitlab/kubernetes/gitlab.yml \
+                ${DIR}/dev-platform/jenkins/kubernetes/jenkins.yml
             ;;
         dashboard)
             minikube dashboard
