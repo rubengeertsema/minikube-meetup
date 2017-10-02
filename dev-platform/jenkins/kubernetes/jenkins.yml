@@ -1,4 +1,19 @@
 ---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jenkins-ingress
+  labels:
+    app: jenkins
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /jenkins
+            backend:
+              serviceName: jenkins
+              servicePort: 8080
+---
 apiVersion: v1
 kind: Service
 metadata:

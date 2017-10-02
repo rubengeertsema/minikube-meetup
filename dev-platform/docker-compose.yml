@@ -14,7 +14,8 @@ services:
     networks:
       - development
   gitlab:
-    image: 'gitlab/gitlab-ce:latest'
+    build: ./gitlab
+    image: gitlab/gitlab-custom:latest
     container_name: gitlab
     restart: always
     ports:

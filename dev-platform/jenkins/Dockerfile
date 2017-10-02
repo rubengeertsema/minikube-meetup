@@ -54,9 +54,17 @@ RUN mv /usr/local/bin/docker /usr/local/bin/docker.bin \
     && printf '#!/bin/bash\nsudo docker.bin "$@"\n' > /usr/local/bin/docker \
 	&& chmod +x /usr/local/bin/docker
 
+# Add some handy aliases for all users
+RUN echo "alias ll='ls -al'" >> /etc/bash.bashrc \
+    && echo "alias k='kubectl'" >> /etc/bash.bashrc \
+    && echo "alias d='docker'" >> /etc/bash.bashrc
+
 # Switch to user Jenkins.
 USER jenkins
 
 # Set JVM options and prevent Jenkins setup wizard from showing up.
 ENV JAVA_OPTS="-XX:PermSize=1024m -XX:MaxPermSize=512m"
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+
+# Set jenkins context path to match Kubernetes ingress
+ENV JENKINS_OPTS --prefix=/jenkins
