@@ -21,8 +21,6 @@ metadata:
   labels:
     app: jenkins
 spec:
-  externalIPs:
-  - 192.168.99.100
   ports:
   - port: 8080
     targetPort: 8080

@@ -29,15 +29,11 @@ function run() {
             DIR=$(pwd)
             cd ${DIR}/kubernetes && sh start-minikube.sh
             cd ${DIR}/dev-platform && sh deploy-dev-platform.sh
-            cd ${DIR}
             ;;
         start)
             minikube start
-            echo "re-applying base descriptors in case minikube ip has changed..."
-            DIR=$(pwd)
-            apply_descriptor ${DIR}/kubernetes/ingress.yml \
-                ${DIR}/dev-platform/gitlab/kubernetes/gitlab.yml \
-                ${DIR}/dev-platform/jenkins/kubernetes/jenkins.yml
+            echo "re-applying traefik descriptor in case minikube ip has changed..."
+            apply_descriptor kubernetes/traefik.yml
             ;;
         dashboard)
             minikube dashboard

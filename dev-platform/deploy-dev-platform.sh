@@ -5,17 +5,17 @@ function build_docker_image() {
     eval $(minikube docker-env) && docker build -t ${1} ${2}
 }
 
-function apply_deployment() {
+function apply_descriptor() {
     for var in "$@"
     do
         printf "\n---- Applying deployment descriptor [${var}] ----\n"
-        IP=$(minikube ip)
-        cat ${var} | sed s/192.168.99.100/${IP}/ | kubectl apply -f -
+        kubectl apply -n tools -f ${var}
     done
 }
 
 build_docker_image jenkins/jenkins-custom:latest ./jenkins
-apply_deployment jenkins/kubernetes/jenkins.yml gitlab/kubernetes/gitlab.yml
+build_docker_image gitlab/gitlab-custom:latest ./gitlab
+apply_descriptor jenkins/kubernetes/jenkins.yml gitlab/kubernetes/gitlab.yml
 
 printf "\n==================================================="
 printf "\n  Now wait for the dev-tools to be up and running."

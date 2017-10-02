@@ -29,4 +29,4 @@ function apply_descriptor() {
 
 start_minikube
 wait_for_minikube_readiness
-apply_descriptor ingress.yml namespaces/prod.yml
+apply_descriptor traefik.yml namespaces/tools.yml namespaces/prod.yml

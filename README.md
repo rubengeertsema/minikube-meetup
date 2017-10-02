@@ -59,14 +59,14 @@ your own will if needed by changing the mentioned settings in [start-minikube.sh
 Use the command `minikube dashboard` or start it by running `./minikube.sh` located in the root of this project.
 
 ## 4) Open Jenkins
-To open Jenkins go to `http://<minikube-ip>:8080`
+To open Jenkins go to `http://<minikube-ip>/jenkins`
 
 ***Notes:*** 
 * You can get the minikube ip by running the command `minikube ip`
 * Installation may take a while, so don't worry if it does not load immediately after installation
 
 ## 5) Open Gitlab
-To open Gitlab go to `http://<minikube-ip>:8081`
+To open Gitlab go to `http://<minikube-ip>/gitlab`
 
 ***Notes:*** 
 * You can get the minikube ip by running the command `minikube ip`
