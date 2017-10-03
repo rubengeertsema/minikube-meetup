@@ -28,7 +28,7 @@ function run() {
         install)
             DIR=$(pwd)
             cd ${DIR}/kubernetes && sh start-minikube.sh
-            cd ${DIR}/dev-platform && sh deploy-dev-platform.sh
+            cd ${DIR}/dev-tools && sh deploy-dev-tools.sh
             ;;
         start)
             minikube start

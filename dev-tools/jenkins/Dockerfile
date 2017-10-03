@@ -1,14 +1,10 @@
-FROM jenkins/jenkins:2.78
+FROM jenkins/jenkins:2.82
 
 # Needed to install tools with apt-get
 USER root
 
-# Install tools.
-RUN apt-get update && apt-get install -y \
-        default-jre \
-        vim \
-        openssh-client \
-        sudo \
+# Install some extra tools
+RUN apt-get update && apt-get install -y vim sudo \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ## Install docker-cli
@@ -31,25 +27,23 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
     && apt-get install -y nodejs build-essential \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install angular-cli
-ENV ANGULAR_CLI_VERSION 1.3.2
-RUN npm install -g @angular/cli@${ANGULAR_CLI_VERSION}
-
 # Install google-chrome-stable for frontend unit testing & e2e testing
 RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update && apt-get install -y google-chrome-stable \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install predefined Jenkins plugins.
+# Install predefined Jenkins plugins
+# Fix for installing plugins: https://github.com/jenkinsci/docker/issues/502
 COPY config/plugins.txt /usr/share/jenkins/ref/plugins.txt
-RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
+RUN xargs /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 
 # Give jenkins user passwordless sudo
 RUN echo 'jenkins ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 
 # Replace the docker binary with a sudo script so jenkins user can perform sudoless docker commands
 # From: https://github.com/psharkey/docker/blob/master/jenkins-dood/Dockerfile
+# See https://github.com/jenkinsci/docker/issues/196#issuecomment-179486312 for other possible sollutions
 RUN mv /usr/local/bin/docker /usr/local/bin/docker.bin \
     && printf '#!/bin/bash\nsudo docker.bin "$@"\n' > /usr/local/bin/docker \
 	&& chmod +x /usr/local/bin/docker
@@ -59,10 +53,10 @@ RUN echo "alias ll='ls -al'" >> /etc/bash.bashrc \
     && echo "alias k='kubectl'" >> /etc/bash.bashrc \
     && echo "alias d='docker'" >> /etc/bash.bashrc
 
-# Switch to user Jenkins.
+# Switch to user Jenkins
 USER jenkins
 
-# Set JVM options and prevent Jenkins setup wizard from showing up.
+# Set JVM options and prevent Jenkins setup wizard from showing up
 ENV JAVA_OPTS="-XX:PermSize=1024m -XX:MaxPermSize=512m"
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 
