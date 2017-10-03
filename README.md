@@ -49,7 +49,6 @@ The custom Jenkins configuration will support the following:
 * kubectl
 * node
 * npm
-* ng-cli
 * google-chrome-stable
 
 ***Note:*** minikube is configured to start a virtual machine on VirtualBox with `4 cpus` and `8192` memory. Adjust to 
