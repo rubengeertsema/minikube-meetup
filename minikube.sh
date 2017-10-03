@@ -6,7 +6,7 @@ function usage() {
   printf "  dashboard      show minikube dashboard\n"
   printf "  delete         remove the minikube machine\n"
   printf "  help           show help\n"
-  printf "  install        start & install minikube and dev-platform\n"
+  printf "  install        install & start minikube with dev-tools Jenkins & Gitlab\n"
   printf "  ip             get minikube ip\n"
   printf "  start          start minikube\n"
   printf "  stop           stop minikube\n\n"
