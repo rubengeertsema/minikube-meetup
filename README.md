@@ -2,7 +2,7 @@ Kubernetes minikube meetup
 ==========================
 
 This repo has a pre-configured Kubernetes minikube environment which will be used during the meetup 
-***[Workshop Continuous Deployment naar Kubernetes](https://www.meetup.com/nl-NL/Technical-Test-Experts-Nederland/events/243333191/)***.
+[Workshop Continuous Deployment naar Kubernetes](https://www.meetup.com/nl-NL/Technical-Test-Experts-Nederland/events/243333191/).
 
 # General
 
