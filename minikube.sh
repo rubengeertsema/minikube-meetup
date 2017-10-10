@@ -27,8 +27,8 @@ function run() {
     case "${ACTION}" in
         install)
             DIR=$(pwd)
-            cd ${DIR}/kubernetes && sh start-minikube.sh
-            cd ${DIR}/dev-tools && sh deploy-dev-tools.sh
+            cd ${DIR}/kubernetes && ./start-minikube.sh
+            cd ${DIR}/dev-tools && ./deploy-dev-tools.sh
             ;;
         start)
             minikube start
