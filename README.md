@@ -36,7 +36,7 @@ Before you spin up the pre-configured minikube environment make sure you have in
 * [VirtualBox](https://www.virtualbox.org/)
 
 ## 2) Install pre-configured environment
-You can install the pre-configured Kubernetes environment by running `./minikube.sh` located in the root of this 
+You can install the pre-configured Kubernetes environment by running `./minikube.sh install` located in the root of this 
 project (follow the command line interface). Installation might take a while depending on your internet connection.
 
 After installation you will have:
