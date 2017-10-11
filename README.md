@@ -51,8 +51,9 @@ The custom Jenkins configuration will support the following:
 * npm
 * google-chrome-stable
 
-***Note:*** minikube is configured to start a virtual machine on VirtualBox with `4 cpus` and `8192` memory. Adjust to 
-your own will if needed by changing the mentioned settings in [start-minikube.sh](./kubernetes/start-minikube.sh)
+***Note:*** minikube is configured to start a virtual machine on VirtualBox with `4 cpus` and `8192` memory 
+(Jenkins and Gitlab take up lots of memory). Adjust to your own will if needed by changing the mentioned 
+settings in [start-minikube.sh](./kubernetes/start-minikube.sh)
 
 ## 3) Open the Kubernetes dashboard
 Use the command `minikube dashboard` or start it by running `./minikube.sh` located in the root of this project.
